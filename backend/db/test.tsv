@@ -1,0 +1,4 @@
+Feature_name	ORF_ID	Common	Description	CGDID	S_cer_ortholog
+C5_00150C_A	orf19.5682		Ortholog(s) have nuclear localization sequence binding, protein-containing complex binding activity and role in NLS-bearing protein import into nucleus, proteasome localization, protein import into nucleus, protein targeting to membrane	CAL0000179212	SRP1
+CR_09950C_A	orf19.7569	SIK1	Putative U3 snoRNP protein; Hap43p-induced gene; physically interacts with TAP-tagged Nop1p	CAL0000178436	NOP56
+CR_01760C_A	orf19.2573	FRS1	Phenylalanyl-tRNA synthetase; possible role in early cell wall biosynthesis; downregulated by phagocytosis by macrophages; possibly essential gene, disruptants not obtained by UAU1 method; protein present in exponential and stationary phase	CAL0000190210	FRS1
