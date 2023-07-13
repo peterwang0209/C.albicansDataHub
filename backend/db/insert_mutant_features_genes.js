@@ -85,7 +85,7 @@ function insertDataFromExcel(excelFilePath, dbFilePath) {
           }
         });
 
-        console.log("Data inserted successfully.");
+        console.log("Mutant Feautres Data inserted successfully.");
         db.close();
       });
     });

@@ -4,13 +4,14 @@ import AllData from "../views/AllData.vue";
 import Database from "../views/Database.vue";
 import Research from "../views/Research.vue";
 import About from "../views/About.vue";
+import DataPage from "../views/DataPage.vue";
 
 const routes = [
   { path: "/", component: HomeData },
   { path: "/alldata", component: AllData },
-  { path: "/database", component: Database },
   { path: "/research", component: Research },
   { path: "/about", component: About },
+  { path: "/datapage", name: "DataPage", component: DataPage, props: true },
 ];
 
 const router = createRouter({

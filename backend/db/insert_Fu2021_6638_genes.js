@@ -67,7 +67,7 @@ async function insertFu2021Data(FilePath, DBFilePath) {
           }
         });
 
-        console.log("Data inserted successfully.");
+        console.log("FU2021 Data inserted successfully.");
         db.close();
       });
     });
