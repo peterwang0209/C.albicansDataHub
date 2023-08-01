@@ -12,10 +12,14 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@types/three": "^0.154.0",
     "axios": "^1.4.0",
+    "js-cookie": "^3.0.5",
+    "three": "^0.154.0",
     "vue": "^3.3.4",
     "vue-infinite-scroll": "^2.0.2",
-    "vue-router": "^4.2.2"
+    "vue-router": "^4.2.2",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",

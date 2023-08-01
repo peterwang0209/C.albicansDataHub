@@ -21,7 +21,7 @@ export default {
   },
   async created() {
     try {
-      const res = await axios.get(`http://localhost:8803`);
+      const res = await axios.get(`http://localhost:8804`);
       this.items = res.data;
     } catch (error) {
       console.log(error);

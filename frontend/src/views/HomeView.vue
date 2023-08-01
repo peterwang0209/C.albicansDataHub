@@ -1,7 +1,9 @@
 <template>
   <div>
     <div>
+      <!-- <ThreeD/> -->
       <Splash />
+      
     </div>
     <!-- Search Bar -->
     <div><SearchBar /></div>
@@ -16,6 +18,7 @@
 <script setup lang="ts">
 import SearchBar from "../components/SearchBar.vue";
 import Splash from "../components/Splash.vue";
+import ThreeD from "../components/ThreeD.vue";
 </script>
 
 <style scoped>

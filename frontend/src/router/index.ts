@@ -11,7 +11,7 @@ const routes = [
   { path: "/alldata", component: AllData },
   { path: "/research", component: Research },
   { path: "/about", component: About },
-  { path: "/datapage", name: "DataPage", component: DataPage, props: true },
+  { path: "/datapage/:id", name: "DataPage", component: DataPage, props: true },
 ];
 
 const router = createRouter({

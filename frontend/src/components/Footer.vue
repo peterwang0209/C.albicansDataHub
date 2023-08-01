@@ -1,5 +1,5 @@
 <template>
-  <footer class="relative py-3 flex items-center justify-between border-t">
+  <footer class="relative py-3 flex items-center justify-between">
     <div class="absolute left-0 flex items-center pl-4">
       <img
         src="../assets/U_toronto.svg"

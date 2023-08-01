@@ -8,6 +8,7 @@
 
 <script setup lang="ts">
 import Header from "./components/Header.vue";
-import Home from "./views/HomeView.vue";
+// import Home from "./views/HomeView.vue";
 import Footer from "./components/Footer.vue";
+// import store from './vuex/store';
 </script>
