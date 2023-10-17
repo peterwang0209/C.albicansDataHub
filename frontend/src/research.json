@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Research Title 1",
+    "authors": ["Author 1", "Author 2"],
+    "date": "2023-08-02",
+    "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat orci ac nibh dignissim euismod. Mauris nec eros pulvinar, porttitor risus nec, efficitur velit. Suspendisse suscipit gravida dolor non pulvinar. Cras hendrerit posuere elit at commodo. Pellentesque lobortis massa at semper fringilla. Nullam laoreet cursus odio eget ultricies. Pellentesque eu.",
+    "link": "http://research1.com"
+  },
+  {
+    "title": "Research Title 2",
+    "authors": ["Author 3"],
+    "date": "2023-08-03",
+    "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat orci ac nibh dignissim euismod. Mauris nec eros pulvinar, porttitor risus nec, efficitur velit. Suspendisse suscipit gravida dolor non pulvinar. Cras hendrerit posuere elit at commodo. Pellentesque lobortis massa at semper fringilla. Nullam laoreet cursus odio eget ultricies. Pellentesque eu. ",
+    "link": "http://research2.com"
+  },
+  {
+    "title": "Research Title 3",
+    "authors": ["Author 4", "Author 5", "Author 6"],
+    "date": "2023-08-04",
+    "abstract": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat orci ac nibh dignissim euismod. Mauris nec eros pulvinar, porttitor risus nec, efficitur velit. Suspendisse suscipit gravida dolor non pulvinar. Cras hendrerit posuere elit at commodo. Pellentesque lobortis massa at semper fringilla. Nullam laoreet cursus odio eget ultricies. Pellentesque eu. ",
+    "link": "http://research3.com"
+  }
+]

@@ -1,41 +1,54 @@
 <template>
-  <nav class="flex items-center justify-between p-6 shadow-md">
+  <nav class="flex items-center justify-between p-6 border-b-2">
     <div class="flex items-center flex-shrink-0 mr-6">
-      <router-link to="/" class="font-semibold text-xl tracking-tight">
-        C.AlbicansDataHub
+      <router-link to="/" class="font-splash font-semibold text-xl ml-3">
+        CandidaPhenome
       </router-link>
+      
     </div>
     <div class="flex items-center">
       <router-link
         to="/"
-        class="mt-4 inline-block mr-4 pr-4 border-r"
+        class="mr-4 no-underline hover:underline underline-offset-8 font-splash"
       >
         Home
       </router-link>
       <router-link
         to="/alldata"
-        class="mt-4 inline-block mr-4 pr-4 border-r"
+        class="mr-4 no-underline hover:underline underline-offset-8 font-splash"
       >
         All Data
       </router-link>
       <router-link
         to="/research"
-        class="mt-4 inline-block mr-4 pr-4 border-r"
+        class="mr-4 no-underline hover:underline underline-offset-8 font-splash"
       >
         Research
       </router-link>
       <router-link
         to="/about"
-        class="mt-4 inline-block mr-4 pr-4 border-r"
+        class="mr-4 no-underline hover:underline underline-offset-8 font-splash"
       >
         About
       </router-link>
-      <a
+      <router-link
+        to="/overview"
+        class="mr-4 no-underline hover:underline underline-offset-8 font-splash"
+      >
+        Overview
+      </router-link>
+      <!-- <router-link
+        to="/feedback"
+        class="mr-4 no-underline hover:underline underline-offset-8 font-splash"
+      >
+        BugReport
+      </router-link> -->
+      <!-- <a
         href="https://github.com/peterwang0209/C.albicansDataHub"
-        class="mt-4 inline-block mr-4"
+        class="mr-4 no-underline hover:underline underline-offset-8"
       >
         Github
-      </a>
+      </a> -->
     </div>
   </nav>
 </template>

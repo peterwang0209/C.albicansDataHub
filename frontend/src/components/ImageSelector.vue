@@ -1,26 +1,49 @@
 <template>
-  <div class="image-selector">
-    <div v-for="(image, index) in images" :key="index" @click="selectImage(image)">
-      <img :src="'data:image/png;base64,' + image" class="small-image" />
+  <div class="image-selector ml-10 mt-4 border-1 shadow bg-neutral-300 p-3">
+    <div
+      v-for="(image, index) in images"
+      :key="index"
+      @click="
+        selectImage(
+          image.data,
+          image.position,
+          image.grace,
+          image.plate,
+          image.dox
+        )
+      "
+    >
+      <img :src="'data:image/png;base64,' + image.data" class="small-image" />
     </div>
   </div>
 </template>
-
 <script>
 export default {
   props: {
     images: {
       type: Array,
-      default: () => []
+      default: () => [],
+    },
+  },
+  watch: {
+    images(newVal) {
+      console.log("Images prop updated:", newVal[0], newVal[1]);
     }
   },
   methods: {
-    selectImage(image) {
-      this.$emit('select', image);
+    selectImage(imageData, position, grace, plate, dox) {
+      this.$emit("select", {
+        data: imageData,
+        position: position,
+        grace: grace,
+        plate: plate,
+        dox: dox,
+      });
     }
-  }
+  },
 };
 </script>
+
 
 <style scoped>
 .image-selector {
