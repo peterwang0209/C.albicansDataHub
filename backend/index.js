@@ -118,7 +118,6 @@ app.get("/search/gracev2", async (req, res) => {
   res.json(allGrace2Results);
 });
 
-// Assuming 'db.fetchAllFeedback' is a function that returns all feedback from your database
 app.get("/feedback", async (req, res) => {
   console.log("Reached GET /feedback");
   try {
