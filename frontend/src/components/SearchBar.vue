@@ -33,7 +33,7 @@
         />
       </form>
     </div>
-    <!-- <div class="flex justify-center mt-40 flex-col ml-10">
+    <div class="flex justify-center mt-40 flex-col ml-10">
       <h2 class="text-xl font-semibold mb-2">Search History:</h2>
       <div class="flex flex-wrap">
         <div
@@ -45,7 +45,7 @@
           {{ item.type }} : {{ item.term }}
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -76,7 +76,9 @@ export default {
       // Encode periods in the search term
       searchItem.term = searchItem.term.replace(/\./g, "%2E");
       // TODO: fix the cookie search history
-      // this.$store.commit("searchHistory/addSearch", searchItem);
+      console.log("cache search");
+      console.log(searchItem);
+      this.$store.commit("searchHistory/addSearch", searchItem);
       this.$router.push({
         name: "DataPage",
         params: { id: searchItem.term, type: searchItem.type },

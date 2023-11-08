@@ -6,6 +6,7 @@ const searchHistoryInitialState = searchHistoryCookie
   : [];
 
 export default {
+  namespaced: true,
   state: {
     searchHistory: searchHistoryInitialState,
   },

@@ -32,7 +32,7 @@
     <!-- gallery -->
     <div class="flex-grow">
       <div v-if="binaryContent && parsedBinaryData.data">
-        <GraceData :parsedBinaryData="parsedBinaryData" :key="selectedPanel"/>
+        <GraceData :parsedBinaryData="parsedBinaryData" :key="selectedPanel" />
       </div>
 
       <div v-else>
@@ -77,14 +77,16 @@ export default {
   },
   methods: {
     async fetchResults(table) {
-      // console.log("asunc fetchResult");
       const searchValue = this.$route.params.id;
       const searchKey = this.$route.params.type;
-      const response = await fetch(
-        `http://localhost:8804/search/${table}?type=${searchKey}&term=${searchValue}`
-      );
+      const url = `${
+        import.meta.env.VITE_API_URL
+      }/search/${table}?type=${searchKey}&term=${searchValue}`;
+
+      const response = await fetch(url);
+
       const data = await response.json();
-      console.log(data);
+
       if (this.binaryContent) {
         this.parsedBinaryData = { table, data };
       } else {

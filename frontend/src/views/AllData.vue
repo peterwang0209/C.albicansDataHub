@@ -72,10 +72,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
-import axios from "axios";
-
+<script>
 export default {
   name: "App",
   data() {
@@ -129,12 +126,17 @@ export default {
   },
   async created() {
     try {
-      const res = await axios.get(`http://localhost:8804/alldata`);
-      this.items = res.data;
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/alldata`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      this.items = data;
     } catch (error) {
       console.log(error);
     }
   },
+
   methods: {
     firstPage() {
       this.currentPage = 1;

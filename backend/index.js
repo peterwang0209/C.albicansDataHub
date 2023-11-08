@@ -6,7 +6,12 @@ const db = require("./db/query");
 const port = 8804;
 
 const corsOptions = {
-  origin: ["http://localhost:8803", "http://localhost:8804"],
+  origin: [
+    "http://www.candidaphenom.org",
+    "https://www.candidaphenom.org",
+    "http://localhost:8803",
+    "http://localhost:8804",
+  ],
   optionsSuccessStatus: 200,
 };
 
@@ -14,7 +19,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Serve static files from the Vue app
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 app.get("/alldata", async (req, res) => {
   const joinedData = await db.JoinData();
@@ -111,10 +116,23 @@ app.get("/search/gracev2", async (req, res) => {
   res.json(allGrace2Results);
 });
 
+// Assuming 'db.fetchAllFeedback' is a function that returns all feedback from your database
+app.get("/feedback", async (req, res) => {
+  console.log("Reached GET /feedback");
+  try {
+    const allFeedback = await db.fetchAllFeedback();
+    res.status(200).json(allFeedback);
+  } catch (error) {
+    console.error("Error fetching feedback:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 app.post("/feedback", async (req, res) => {
   const { content, category } = req.body;
-
+  console.log("reach backend feedback");
   try {
+    console.log("try block in feedback");
     // Insert the feedback into the database
     await db.insertFeedback(content, category);
 
@@ -129,10 +147,9 @@ app.post("/feedback", async (req, res) => {
 });
 
 // Handle SPA fallback, so any other routes will redirect to the index.html of Vue
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../frontend/dist/index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"));
 });
-
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);

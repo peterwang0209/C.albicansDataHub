@@ -37,12 +37,12 @@
       >
         Overview
       </router-link>
-      <!-- <router-link
+      <router-link
         to="/feedback"
         class="mr-4 no-underline hover:underline underline-offset-8 font-splash"
       >
-        BugReport
-      </router-link> -->
+        FeedBack
+      </router-link>
       <!-- <a
         href="https://github.com/peterwang0209/C.albicansDataHub"
         class="mr-4 no-underline hover:underline underline-offset-8"
