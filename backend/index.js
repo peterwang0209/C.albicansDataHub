@@ -8,6 +8,8 @@ const port = 8804;
 const corsOptions = {
   origin: [
     "http://www.candidaphenome.org",
+    "http://candidaphenome.org",
+    "https://candidaphenome.org "
     "https://www.candidaphenome.org",
     "http://localhost:8803",
     "http://localhost:8804",
