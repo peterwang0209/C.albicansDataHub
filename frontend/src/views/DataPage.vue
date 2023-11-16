@@ -66,10 +66,10 @@ export default {
       binaryContent: false,
       parsedBinaryData: {},
       parsedPlainTextData: {},
-      fu2021Text: "Fu2021",
+      fu2021Text: "Summary",
       graceV1Text: "GraceV1",
       graceV2Text: "GraceV2",
-      mutantFeatureGeneText: "MutantFeatureGene",
+      mutantFeatureGeneText: "FU2021GeneFeature",
     };
   },
   created() {

@@ -30,8 +30,6 @@ app.get("/alldata", async (req, res) => {
 
 async function get_FeatureName(type, value) {
   const fu2021Data = await db.searchFu2021Data(type, value);
-  // console.log("get_FeatureName");
-  // console.log(fu2021Data[0].Feature_name);
   return fu2021Data[0].Feature_name;
 }
 
@@ -56,11 +54,13 @@ app.get("/search/mutant", async (req, res) => {
   // console.log("mutant feature name", feature_name);
   const mutantData = await db.searchMutantFeatureGenesData(feature_name);
   // console.log(mutantData);
+  const rf_prediction_score = await db.rf_prediction_score();
   const gene_expression_level = await db.gene_expression_level();
   const output = {
     data: mutantData,
     stats: {
-      geneExpressionLevel: gene_expression_level,
+      RfPredictionScore: rf_prediction_score,
+      GeneExpressionLevel: gene_expression_level,
     },
   };
   res.json(output);
@@ -155,3 +155,5 @@ app.get("*", (req, res) => {
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
+
+

@@ -14,22 +14,18 @@
       <div class="grid grid-cols-1 gap-4">
         <!-- Using grid with 2 columns and gap for spacing -->
         <div class="">
-          <gene-expression-hist
-            :graph-data="this.plainData.data.stats"
+          <DensityHistHist
+            :graph-data="histogramData"
+            :attribute-name="selectedStat"
             :id="this.plainData.data.data[0].id"
-          ></gene-expression-hist>
+            :selected-attribute-value="selectedAttributeValue"
+          ></DensityHistHist>
         </div>
         <div class="">
-          <gene-expression-box-plot
-            :graph-data="this.plainData.data.stats"
-            :id="this.plainData.data.data[0].id"
-          ></gene-expression-box-plot>
-        </div>
-        <div>
-          <gene-expression-density
-            :graph-data="this.plainData.data.stats"
-            :id="this.plainData.data.data[0].id"
-          ></gene-expression-density>
+          <DropdownSelect
+            :options="options"
+            @option-selected="handleOptionSelect"
+          />
         </div>
       </div>
     </div>
@@ -42,19 +38,22 @@
 <script>
 import TableComponent from "../Table.vue";
 import { keyMapping } from "../../utils/mutant_key_mapping";
-import GeneExpressionHist from "../stats/GeneExpressionHist.vue";
-import GeneExpressionBoxPlot from "../stats/GeneExpressionBoxPlot.vue";
-import GeneExpressionDensity from "../stats/GeneExpressionDensity.vue";
+import DensityHistHist from "../stats/DensityHist.vue";
+import DropdownSelect from "../dropdownSelect.vue";
 export default {
   components: {
     TableComponent,
-    GeneExpressionHist,
-    GeneExpressionBoxPlot,
-    GeneExpressionDensity,
+    DensityHistHist,
+    DropdownSelect,
   },
   data() {
     return {
       keyMapping: keyMapping,
+      options: [
+        { name: "Gene Expression Level", slotName: "GeneExpressionLevel" },
+        { name: "RF Prediction Score", slotName: "RfPredictionScore" },
+      ],
+      selectedStat: "RfPredictionScore",
     };
   },
   props: {
@@ -67,9 +66,28 @@ export default {
     mapKey(key) {
       return keyMapping[key] || key;
     },
+    handleOptionSelect(selectedOption) {
+      console.log("Selected option:", selectedOption);
+      this.selectedStat = selectedOption.slotName;
+    },
   },
   created() {
     // console.log(this.plainData.data.data);
+  },
+  computed: {
+    histogramData() {
+      console.log(this.plainData.data.stats[this.selectedStat]);
+      console.log(this.plainData.data.data[0]);
+      return this.plainData.data.stats[this.selectedStat];
+    },
+    selectedAttributeValue() {
+      const attrMapping = {
+        RfPredictionScore: "attr17",
+        GeneExpressionLevel: "attr1",
+      };
+      const attributeName = attrMapping[this.selectedStat];
+      return this.plainData.data.data[0][attributeName];
+    },
   },
 };
 </script>

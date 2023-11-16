@@ -122,14 +122,31 @@ function insertFeedback(content, category) {
   });
 }
 
+function rf_prediction_score() {
+  return new Promise((resolve, reject) => {
+    knex("MutantFeatureGenesTable")
+      .select("id", "attr17")
+      .whereNotNull("attr17") // Exclude null values
+      .andWhere("attr17", '!=', '') // Exclude empty strings
+      .andWhereRaw("attr17 = attr17") // Exclude NaN values
+      .then(rows => resolve(rows))
+      .catch(err => reject(err));
+  });
+}
+
+
 function gene_expression_level() {
   return new Promise((resolve, reject) => {
     knex("MutantFeatureGenesTable")
       .select("id", "attr1")
-      .then((rows) => resolve(rows))
-      .catch((err) => reject(err));
+      .whereNotNull("attr1") // Exclude null values
+      .andWhere("attr1", '!=', '') // Exclude empty strings
+      .andWhereRaw("attr1 = attr1") // Exclude NaN values
+      .then(rows => resolve(rows))
+      .catch(err => reject(err));
   });
 }
+
 
 module.exports = {
   JoinData,
@@ -143,5 +160,6 @@ module.exports = {
   getGraceV2ImageData,
   fetchAllFeedback,
   insertFeedback,
+  rf_prediction_score,
   gene_expression_level,
 };

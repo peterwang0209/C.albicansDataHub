@@ -1,9 +1,9 @@
 <template>
   <div class="my-4">
     <div class="flex flex-col">
-      <div>
+      <!-- <div>
         <label class="font-serif font-bold">{{ prefix }}</label>
-      </div>
+      </div> -->
       <div v-if="tableData && tableData.length > 0">
         <div class="overflow-x-auto">
           <table
