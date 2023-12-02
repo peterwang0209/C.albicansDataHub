@@ -13,7 +13,7 @@ export default {
   mutations: {
     addSearch(state, searchItem) {
       const index = state.searchHistory.findIndex(
-        (item) => item.term === searchItem.term && item.type === searchItem.type
+        (item) => item.term === searchItem.term
       );
       if (index !== -1) {
         state.searchHistory.splice(index, 1);

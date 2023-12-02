@@ -11,15 +11,26 @@ function JoinData() {
     .select("*");
 }
 
-function searchFu2021Data(key, value) {
+function searchFu2021Data(value) {
+  const lowerCaseValue = value.toLowerCase();
+
   return new Promise((resolve, reject) => {
     knex("Fu2021Table")
-      .where(key, "=", value)
-      .select("*")
-      .then((rows) => resolve(rows))
+      .select("*") // Selects all columns of the matching row
+      .whereRaw("LOWER(Feature_name) = ?", [lowerCaseValue])
+      .orWhereRaw("LOWER(ORF_ID) = ?", [lowerCaseValue])
+      .orWhereRaw("LOWER(Common) = ?", [lowerCaseValue])
+      .then((row) => {
+        if (row) {
+          resolve(row); // Resolves with the whole row if a match is found
+        } else {
+          resolve("No matching record found");
+        }
+      })
       .catch((err) => reject(err));
   });
 }
+
 
 function searchMutantFeatureGenesData(key) {
   return new Promise((resolve, reject) => {
@@ -127,26 +138,24 @@ function rf_prediction_score() {
     knex("MutantFeatureGenesTable")
       .select("id", "attr17")
       .whereNotNull("attr17") // Exclude null values
-      .andWhere("attr17", '!=', '') // Exclude empty strings
+      .andWhere("attr17", "!=", "") // Exclude empty strings
       .andWhereRaw("attr17 = attr17") // Exclude NaN values
-      .then(rows => resolve(rows))
-      .catch(err => reject(err));
+      .then((rows) => resolve(rows))
+      .catch((err) => reject(err));
   });
 }
-
 
 function gene_expression_level() {
   return new Promise((resolve, reject) => {
     knex("MutantFeatureGenesTable")
       .select("id", "attr1")
       .whereNotNull("attr1") // Exclude null values
-      .andWhere("attr1", '!=', '') // Exclude empty strings
+      .andWhere("attr1", "!=", "") // Exclude empty strings
       .andWhereRaw("attr1 = attr1") // Exclude NaN values
-      .then(rows => resolve(rows))
-      .catch(err => reject(err));
+      .then((rows) => resolve(rows))
+      .catch((err) => reject(err));
   });
 }
-
 
 module.exports = {
   JoinData,

@@ -28,17 +28,20 @@ app.get("/alldata", async (req, res) => {
   res.status(200).json({ joinedData });
 });
 
-async function get_FeatureName(type, value) {
-  const fu2021Data = await db.searchFu2021Data(type, value);
+async function get_FeatureName(value) {
+  console.log("visited get_feature");
+  const fu2021Data = await db.searchFu2021Data(value);
+  console.log(fu2021Data);
   return fu2021Data[0].Feature_name;
 }
 
 // Endpoint for Fu2021Data
 app.get("/search/fu2021", async (req, res) => {
-  console.log("visited /search/fu2021");
-  const { term, type } = req.query;
+  // console.log("visited /search/fu2021");
+  const { term } = req.query;
   const value = decodeURIComponent(term.replace("%2E", "."));
-  const fu2021Data = await db.searchFu2021Data(type, value);
+  const fu2021Data = await db.searchFu2021Data(value);
+  // console.log(fu2021Data);
   const output = {
     data: fu2021Data,
     stats: {},
@@ -48,10 +51,10 @@ app.get("/search/fu2021", async (req, res) => {
 
 // Endpoint for MutantFeatureGenesData
 app.get("/search/mutant", async (req, res) => {
-  const { term, type } = req.query;
+  const { term } = req.query;
   const value = decodeURIComponent(term.replace("%2E", "."));
-  const feature_name = await get_FeatureName(type, value);
-  // console.log("mutant feature name", feature_name);
+  const feature_name = await get_FeatureName(value);
+  console.log("mutant feature name", feature_name);
   const mutantData = await db.searchMutantFeatureGenesData(feature_name);
   // console.log(mutantData);
   const rf_prediction_score = await db.rf_prediction_score();
@@ -68,9 +71,9 @@ app.get("/search/mutant", async (req, res) => {
 
 // Endpoint for GraceV1
 app.get("/search/gracev1", async (req, res) => {
-  const { term, type } = req.query;
+  const { term } = req.query;
   const value = decodeURIComponent(term.replace("%2E", "."));
-  const feature_name = await get_FeatureName(type, value);
+  const feature_name = await get_FeatureName(value);
   const gracev1data = await db.searchGraceV1Data(feature_name);
   var graceV1ImageResultsWithData;
   const graceV1ImageResults = await db.searchGraceV1Image(feature_name);
@@ -94,9 +97,9 @@ app.get("/search/gracev1", async (req, res) => {
 
 // Endpoint for GraceV2
 app.get("/search/gracev2", async (req, res) => {
-  const { term, type } = req.query;
+  const { term } = req.query;
   const value = decodeURIComponent(term.replace("%2E", "."));
-  const feature_name = await get_FeatureName(type, value);
+  const feature_name = await get_FeatureName(value);
   const gracev2data = await db.searchGraceV2Data(feature_name);
   var graceV2ImageResultsWithData;
   const graceV2ImageResults = await db.searchGraceV2Image(feature_name);

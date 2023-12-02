@@ -1,5 +1,6 @@
 <template>
   <div>
+    <HorizontalScrollBar/>
     <div>
       <Splash />
     </div>
@@ -8,8 +9,17 @@
   </div>
 </template>
 
-<script setup>
+<script>
+import HorizontalScrollBar from '../components/HorizontalScrollBar.vue'
 import SearchBar from '../components/SearchBar.vue'
 import Splash from '../components/Splash.vue'
+
+export default {
+  components: {
+    SearchBar,
+    Splash,
+    HorizontalScrollBar
+  }
+}
 </script>
 

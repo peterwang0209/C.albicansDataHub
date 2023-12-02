@@ -1,14 +1,9 @@
 <template>
   <div class="my-4">
     <div class="flex flex-col">
-      <!-- <div>
-        <label class="font-serif font-bold">{{ prefix }}</label>
-      </div> -->
-      <div v-if="tableData && tableData.length > 0">
+      <div v-if="tableData">
         <div class="overflow-x-auto">
-          <table
-            class="table-fixed bg-white divide-y divide-gray-300 rounded-lg striped-table border-collapse border"
-          >
+          <table class="table-fixed bg-white divide-y divide-gray-300 rounded-lg striped-table border-collapse border">
             <tbody class="divide-y divide-gray-200">
               <tr v-for="(value, key) in tableData[0]" :key="prefix + key">
                 <td class="px-6 py-4">
@@ -32,7 +27,7 @@
 export default {
   props: {
     tableData: {
-      type: Array,
+      type: Object,
       required: true,
     },
     prefix: {

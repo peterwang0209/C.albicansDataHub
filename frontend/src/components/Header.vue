@@ -4,7 +4,6 @@
       <router-link to="/" class="font-splash font-semibold text-xl ml-3">
         CandidaPhenome
       </router-link>
-      
     </div>
     <div class="flex items-center">
       <router-link
@@ -43,6 +42,13 @@
       >
         FeedBack
       </router-link>
+      <router-link
+        to="/devlog"
+        class="mr-4 no-underline hover:underline underline-offset-8 font-splash"
+      >
+        DevLog
+      </router-link>
+
       <!-- <a
         href="https://github.com/peterwang0209/C.albicansDataHub"
         class="mr-4 no-underline hover:underline underline-offset-8"

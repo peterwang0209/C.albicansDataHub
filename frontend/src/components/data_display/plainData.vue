@@ -14,12 +14,12 @@
       <div class="grid grid-cols-1 gap-4">
         <!-- Using grid with 2 columns and gap for spacing -->
         <div class="">
-          <DensityHistHist
+          <DensityHist
             :graph-data="histogramData"
             :attribute-name="selectedStat"
             :id="this.plainData.data.data[0].id"
             :selected-attribute-value="selectedAttributeValue"
-          ></DensityHistHist>
+          ></DensityHist>
         </div>
         <div class="">
           <DropdownSelect
@@ -38,12 +38,12 @@
 <script>
 import TableComponent from "../Table.vue";
 import { keyMapping } from "../../utils/mutant_key_mapping";
-import DensityHistHist from "../stats/DensityHist.vue";
+import DensityHist from "../stats/DensityHist.vue";
 import DropdownSelect from "../dropdownSelect.vue";
 export default {
   components: {
     TableComponent,
-    DensityHistHist,
+    DensityHist,
     DropdownSelect,
   },
   data() {

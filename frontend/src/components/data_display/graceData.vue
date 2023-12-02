@@ -1,22 +1,26 @@
 <template>
   <div>
-    <div class="flex">
-      <div class="flex-none">
-        <table-component
-          :table-data="tableDataForCurrentTable"
-          :prefix="parsedBinaryData.table"
-        ></table-component>
-      </div>
-      <div
-        class="flex-auto"
-        v-if="tableDataForCurrentTable && tableDataForCurrentTable.length > 0"
-      >
-        <div class="flex flex-col w-full mx-auto h-3/4 items-start">
-          <image-display :src="selectedImage" />
-          <!-- {{this.selectedImage}} -->
-          <image-selector :images="allImages" @select="handleImageSelect" />
+    <div v-if="!isDataEmpty()">
+      <div class="flex">
+        <div class="flex-none">
+          <table-component
+            :table-data="tableDataForCurrentTable"
+            :prefix="parsedBinaryData.table"
+          ></table-component>
+        </div>
+        <div
+          class="flex-auto"
+          v-if="tableDataForCurrentTable && tableDataForCurrentTable.length > 0"
+        >
+          <div class="flex flex-col w-full mx-auto h-3/4 items-start">
+            <image-display :src="selectedImage" />
+            <image-selector :images="allImages" @select="handleImageSelect" />
+          </div>
         </div>
       </div>
+    </div>
+    <div v-else>
+      <empty-data />
     </div>
   </div>
 </template>
@@ -26,11 +30,13 @@
 import TableComponent from "../Table.vue";
 import ImageDisplay from "../ImageDisplay.vue";
 import ImageSelector from "../ImageSelector.vue";
+import EmptyData from "../EmptyData.vue";
 export default {
   components: {
     ImageDisplay,
     ImageSelector,
     TableComponent,
+    EmptyData,
   },
   data() {
     return {
@@ -54,6 +60,29 @@ export default {
     },
   },
   methods: {
+    isDataEmpty() {
+      if (!this.parsedBinaryData || !this.parsedBinaryData.data) {
+        return true; // If parsedBinaryData or its data property is not present
+      }
+
+      const tableType = this.parsedBinaryData.table;
+      if (tableType === "gracev1") {
+        return (
+          this.isEmpty(this.parsedBinaryData.data.gracev1data) &&
+          this.isEmpty(this.parsedBinaryData.data.graceV1ImageSelections)
+        );
+      } else if (tableType === "gracev2") {
+        return (
+          this.isEmpty(this.parsedBinaryData.data.gracev2data) &&
+          this.isEmpty(this.parsedBinaryData.data.graceV2ImageSelections)
+        );
+      }
+
+      return true; // Default case if tableType is neither gracev1 nor gracev2
+    },
+    isEmpty(array) {
+      return !array || array.length === 0;
+    },
     handleImageSelect(image) {
       this.selectedImage = image;
     },
@@ -113,6 +142,14 @@ export default {
     parsedBinaryData: {
       type: Object,
       default: () => ({}),
+    },
+  },
+  watch: {
+    parsedBinaryData: {
+      deep: true,
+      handler(newVal) {
+        this.updateImages();
+      },
     },
   },
 };

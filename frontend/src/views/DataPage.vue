@@ -78,15 +78,15 @@ export default {
   methods: {
     async fetchResults(table) {
       const searchValue = this.$route.params.id;
-      const searchKey = this.$route.params.type;
+      // const searchKey = this.$route.params.type;
       const url = `${
         import.meta.env.VITE_API_URL
-      }/search/${table}?type=${searchKey}&term=${searchValue}`;
+      }/search/${table}?term=${searchValue}`;
 
       const response = await fetch(url);
 
       const data = await response.json();
-
+      console.log(data);
       if (this.binaryContent) {
         this.parsedBinaryData = { table, data };
       } else {
