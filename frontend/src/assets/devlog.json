@@ -1,11 +1,42 @@
 [
-    {
-      "version": "V1.1",
-      "content": ["Add DevLog page, user can click the version number at the bottom or DevLog on the top right to browse the change", "Improved the search functionality. Users can input and search any data among Feature_name, ORF_ID, and Commons without specifying the type through a dropdown menu.", "Updated the Search History Component.", "Fixed the issue that images disappear when alternating between graceV1 and graceV2.", "Now if the data does not exist, an EmptyData page will be displayed instead of a blank page."]
-    },
-    {
-        "version": "V1.0",
-        "content": ["Website Launched.", "Search with the dropdown menu.","All data page", "Feedback page", "About page", "Research Page", "Overview Page", "Home Page", "Data Navigation Panel which allow user switch between Summary, Fu2021GeneFeature, GraceV1, Gracev2", "D3.js frequency Histogram display in Fu2021GeneFeature page", "Highlight selected cell of DOX/NODOX in GraceV1 and GraceV2"]
-    }
-  ]
-  
+  {
+    "version": "V2.0",
+    "content": [
+      "Add In Vitro Table",
+      "Add In Vivo Table",
+      "User can see SI result",
+      "User can see SI Kinase result",
+      "User can see GI Day 5 result",
+      "User can see GI Day 10 result",
+      "Imporve async logic for data insertion",
+      "Add Empty page to plain data view",
+      "Add corresponding search query in knex query.js"
+    ]
+  },
+  {
+    "version": "V1.1",
+    "content": [
+      "Add DevLog page, user can click the version number at the bottom or DevLog on the top right to browse the change",
+      "Improved the search functionality. Users can input and search any data among Feature_name, ORF_ID, and Commons without specifying the type through a dropdown menu.",
+      "Updated the Search History Component.",
+      "Fixed the issue that images disappear when alternating between graceV1 and graceV2.",
+      "Now if the data does not exist, an EmptyData page will be displayed instead of a blank page."
+    ]
+  },
+  {
+    "version": "V1.0",
+    "content": [
+      "Website Launched.",
+      "Search with the dropdown menu.",
+      "All data page",
+      "Feedback page",
+      "About page",
+      "Research Page",
+      "Overview Page",
+      "Home Page",
+      "Data Navigation Panel which allow user switch between Summary, Fu2021GeneFeature, GraceV1, Gracev2",
+      "D3.js frequency Histogram display in Fu2021GeneFeature page",
+      "Highlight selected cell of DOX/NODOX in GraceV1 and GraceV2"
+    ]
+  }
+]

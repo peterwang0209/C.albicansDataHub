@@ -25,6 +25,31 @@
           :clicked="selectedPanel === 'gracev2'"
           @click="handlePanelClick('gracev2')"
         />
+        <PanelEntry
+          :text="inVitroText"
+          :clicked="selectedPanel === 'invitro'"
+          @click="handlePanelClick('invitro')"
+        />
+        <PanelEntry
+          :text="inVivoSIText"
+          :clicked="selectedPanel === 'invivosi'"
+          @click="handlePanelClick('invivosi')"
+        />
+        <PanelEntry
+          :text="inVivoSIKinaseText"
+          :clicked="selectedPanel === 'invivosikinase'"
+          @click="handlePanelClick('invivosikinase')"
+        />
+        <PanelEntry
+          :text="invivoGIDay5Text"
+          :clicked="selectedPanel === 'invivogiday5'"
+          @click="handlePanelClick('invivogiday5')"
+        />
+        <PanelEntry
+          :text="invivoGIDay10Text"
+          :clicked="selectedPanel === 'invivogiday10'"
+          @click="handlePanelClick('invivogiday10')"
+        />
       </div>
       <!-- </transition> -->
     </div>
@@ -70,6 +95,11 @@ export default {
       graceV1Text: "GraceV1",
       graceV2Text: "GraceV2",
       mutantFeatureGeneText: "FU2021GeneFeature",
+      inVitroText: "in vitro",
+      inVivoSIText: "in vivo SI",
+      inVivoSIKinaseText: "in vivo SI Kinase",
+      invivoGIDay5Text: "in vivo GI Day 5",
+      invivoGIDay10Text: "in vivo GI Day 10",
     };
   },
   created() {

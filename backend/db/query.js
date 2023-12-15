@@ -97,8 +97,6 @@ function getGraceV1ImageData(PlateNumber) {
 }
 
 function getGraceV2ImageData(PlateNumber) {
-  console.log("knex");
-  console.log(PlateNumber);
   const normalizedPlateNumber = parseInt(PlateNumber.replace("Plate ", ""), 10);
   return new Promise((resolve, reject) => {
     knex("GraceTable")
@@ -157,6 +155,56 @@ function gene_expression_level() {
   });
 }
 
+function searchGI_D05_Table(key) {
+  return new Promise((resolve, reject) => {
+    knex("GI_D05_Table")
+      .where("orf19", key)
+      .select("*")
+      .then(rows => resolve(rows))
+      .catch(err => reject(err));
+  });
+}
+
+function searchGI_D10_Table(key) {
+  return new Promise((resolve, reject) => {
+    knex("GI_D10_Table")
+      .where("orf19", key)
+      .select("*")
+      .then(rows => resolve(rows))
+      .catch(err => reject(err));
+  });
+}
+
+function searchInVitroTable(key) {
+  return new Promise((resolve, reject) => {
+    knex("InVitroTable")
+      .where("ORF_ID", key)
+      .select("*")
+      .then(rows => resolve(rows))
+      .catch(err => reject(err));
+  });
+}
+
+function searchSI_Kinase_Table(key) {
+  return new Promise((resolve, reject) => {
+    knex("SI_Kinase_Table")
+      .where("orf19", key)
+      .select("*")
+      .then(rows => resolve(rows))
+      .catch(err => reject(err));
+  });
+}
+
+function searchSI_Table(key) {
+  return new Promise((resolve, reject) => {
+    knex("SI_Table")
+      .where("orf19", key)
+      .select("*")
+      .then(rows => resolve(rows))
+      .catch(err => reject(err));
+  });
+}
+
 module.exports = {
   JoinData,
   searchFu2021Data,
@@ -171,4 +219,9 @@ module.exports = {
   insertFeedback,
   rf_prediction_score,
   gene_expression_level,
+  searchGI_D05_Table,
+  searchGI_D10_Table,
+  searchInVitroTable,
+  searchSI_Kinase_Table,
+  searchSI_Table,
 };

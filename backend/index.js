@@ -31,8 +31,13 @@ app.get("/alldata", async (req, res) => {
 async function get_FeatureName(value) {
   console.log("visited get_feature");
   const fu2021Data = await db.searchFu2021Data(value);
-  console.log(fu2021Data);
   return fu2021Data[0].Feature_name;
+}
+
+async function get_ORF(value) {
+  console.log("visited get_orf");
+  const fu2021Data = await db.searchFu2021Data(value);
+  return fu2021Data[0].ORF_ID;
 }
 
 // Endpoint for Fu2021Data
@@ -119,6 +124,75 @@ app.get("/search/gracev2", async (req, res) => {
     graceV2ImageSelections: graceV2ImageResultsWithData,
   };
   res.json(allGrace2Results);
+});
+
+app.get("/search/invitro", async (req, res) => {
+  const { term } = req.query;
+  const value = decodeURIComponent(term.replace("%2E", "."));
+  const orf = await get_ORF(value);
+  const invitroData = await db.searchInVitroTable(orf);
+  // console.log(fu2021Data);
+  const output = {
+    data: invitroData,
+    stats: {},
+  };
+  res.json(output);
+})
+
+// Endpoint for searching in InVivoSI (SI_Table)
+app.get("/search/invivosi", async (req, res) => {
+  try {
+    const { term } = req.query;
+    const value = decodeURIComponent(term.replace("%2E", "."));
+    const orf = await get_ORF(value); // Assuming get_ORF is defined elsewhere
+    const siData = await db.searchSI_Table(orf);
+    res.json({ data: siData, stats: {} });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Endpoint for searching in InVivoSIKinase (SI_Kinase_Table)
+app.get("/search/invivosikinase", async (req, res) => {
+  try {
+    const { term } = req.query;
+    const value = decodeURIComponent(term.replace("%2E", "."));
+    const orf = await get_ORF(value);
+    const siKinaseData = await db.searchSI_Kinase_Table(orf);
+    res.json({ data: siKinaseData, stats: {} });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Endpoint for searching in InVivoGIDay5 (GI_D05_Table)
+app.get("/search/invivogiday5", async (req, res) => {
+  try {
+    const { term } = req.query;
+    const value = decodeURIComponent(term.replace("%2E", "."));
+    const orf = await get_ORF(value);
+    const giDay5Data = await db.searchGI_D05_Table(orf);
+    res.json({ data: giDay5Data, stats: {} });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Endpoint for searching in InVivoGIDay10 (GI_D10_Table)
+app.get("/search/invivogiday10", async (req, res) => {
+  try {
+    const { term } = req.query;
+    const value = decodeURIComponent(term.replace("%2E", "."));
+    const orf = await get_ORF(value);
+    const giDay10Data = await db.searchGI_D10_Table(orf);
+    res.json({ data: giDay10Data, stats: {} });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 app.get("/feedback", async (req, res) => {

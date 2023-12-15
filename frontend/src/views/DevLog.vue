@@ -13,6 +13,20 @@
     </div>
     <div class="p-8">
       <div class="mb-6">
+        <h2 class="text-xl font-semibold mb-2">- Version 2.0 -</h2>
+        <ul class="list-disc pl-5">
+          <li>Add In Vitro Table.</li>
+          <li>Add In Vivo Table.</li>
+          <li>User can see SI result.</li>
+          <li>User can see SI Kinase result</li>
+          <li>User can see GI Day 5 result</li>
+          <li>User can see GI Day 10 result</li>
+          <li>Imporve async logic for data insertion</li>
+          <li>Add Empty page to plain data view</li>
+          <li>Add corresponding search query in knex query.js</li>
+        </ul>
+      </div>
+      <div class="mb-6">
         <h2 class="text-xl font-semibold mb-2">- Version 1.1 -</h2>
         <ul class="list-disc pl-5">
           <li>

@@ -21,59 +21,80 @@ async function LoadData(FilePath) {
   }
 }
 
-async function insertFu2021Data(FilePath, DBFilePath) {
-  const db = new sqlite3.Database(DBFilePath);
-  const data = await LoadData(FilePath);
-  const columnNames = data[0];
-  const columns = columnNames.map((columnName, index) => {
-    if (index === 0) {
-      // Use the first column as the primary key column
-      return `${columnName} TEXT PRIMARY KEY`;
-    } else {
-      // Treat the remaining columns as float number attributes
-      return `${columnName} TEXT`;
-    }
-  });
-  db.serialize(() => {
-    const dropTableSql = `DROP TABLE IF EXISTS Fu2021Table`;
-    db.run(dropTableSql, (err) => {
+function insertFu2021Data(FilePath, DBFilePath) {
+  return new Promise((resolve, reject) => {
+    const db = new sqlite3.Database(DBFilePath, (err) => {
       if (err) {
-        console.error(err.message);
-        return;
+        console.error(`Error opening database: ${err.message}`);
+        reject(err);
       }
-      const createTableSql = `CREATE TABLE Fu2021Table (${columns.join(", ")})`;
-      db.run(createTableSql, (err) => {
-        if (err) {
-          console.error(err.message);
-          return;
-        }
-        // For each data entry start from row 2, insert it to DB
-        data.slice(1).forEach((row, i) => {
-          try {
-            const primaryKey = row[0]?.toString();
-            const attributes = row.slice(1);
-            const placeholders = columnNames.map((_, i) => "?").join(",");
-            const sql = `INSERT INTO Fu2021Table (${columnNames.join(
-              ", "
-            )}) VALUES (${placeholders})`;
-            const data = [primaryKey, ...attributes];
-            db.run(sql, data, (err) => {
+    });
+
+    LoadData(FilePath).then(data => {
+      const columnNames = data[0];
+      const columns = columnNames.map((columnName, index) => {
+        return index === 0 ? `${columnName} TEXT PRIMARY KEY` : `${columnName} TEXT`;
+      });
+
+      new Promise((innerResolve, innerReject) => {
+        db.serialize(() => {
+          db.run(`DROP TABLE IF EXISTS Fu2021Table`, (err) => {
+            if (err) {
+              console.error(`Error dropping table: ${err.message}`);
+              innerReject(err);
+            }
+
+            db.run(`CREATE TABLE Fu2021Table (${columns.join(", ")})`, (err) => {
               if (err) {
-                console.error(`${err.message}`);
+                console.error(`Error creating table: ${err.message}`);
+                innerReject(err);
               }
+
+              Promise.all(data.slice(1).map(row => {
+                return new Promise((insertResolve, insertReject) => {
+                  const primaryKey = row[0]?.toString();
+                  const attributes = row.slice(1);
+                  const placeholders = columnNames.map(() => "?").join(",");
+                  const sql = `INSERT INTO Fu2021Table (${columnNames.join(", ")}) VALUES (${placeholders})`;
+                  const rowData = [primaryKey, ...attributes];
+
+                  db.run(sql, rowData, (err) => {
+                    if (err) {
+                      console.error(`Error inserting data: ${err.message}`);
+                      insertReject(err);
+                    }
+                    insertResolve();
+                  });
+                });
+              })).then(innerResolve).catch(innerReject);
             });
-          } catch (err) {
-            console.error(`${err.message}`);
-          }
+          });
+        });
+      }).then(() => {
+        console.log("FU2021 Data inserted successfully.");
+        resolve();
+      }).catch(reject)
+        .finally(() => {
+          db.close(() => {
+            console.log("Database closed.");
+          });
         });
 
-        console.log("FU2021 Data inserted successfully.");
-        db.close();
-      });
-    });
+    }).catch(reject);
   });
 }
 
 module.exports = {
   insertFu2021Data,
 };
+
+// const dbFilePath = "./database.db";
+// const Fu2021GenePath = "../data/C_albicans_mapped_names_Fu2021_6638_genes.tsv";
+
+// (async () => {
+//   try {
+//     await insertFu2021Data(Fu2021GenePath, dbFilePath);
+//   } catch (error) {
+//     console.error('Error inserting InVitro Data:', error);
+//   }
+// })();
