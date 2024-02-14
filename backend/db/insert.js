@@ -66,7 +66,7 @@ const graceV2image = "../data/image/GRACEv2";
 const graceV1 = "../data/C_albicans_GRACE_essentiality_Fu2021.tsv";
 const graceV2 = "../data/C_albicans_GRACEv2_essentiality_Fu2021.tsv";
 const invitroPath =
-  "../data/in_vitro_summary_mod_t_test_compare_median_normvar_02282023.tsv";
+  "../data/in_vitro_summary_mod_t_test_compare_median_normvar_02282023_flipped.tsv";
 const invivoPath = "../data/Final_summary_mod_t_results_10112023.xlsx";
 
 // Wrap your app logic into an async function

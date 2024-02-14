@@ -127,17 +127,18 @@ app.get("/search/gracev2", async (req, res) => {
 });
 
 app.get("/search/invitro", async (req, res) => {
-  const { term } = req.query;
-  const value = decodeURIComponent(term.replace("%2E", "."));
-  const orf = await get_ORF(value);
-  const invitroData = await db.searchInVitroTable(orf);
-  // console.log(fu2021Data);
-  const output = {
-    data: invitroData,
-    stats: {},
-  };
-  res.json(output);
-})
+  try {
+    const { term } = req.query;
+    const value = decodeURIComponent(term.replace("%2E", "."));
+    const orf = await get_ORF(value);
+    const invitroData = await db.searchInVitroTable(orf);
+    const statsData = await db.in_vitro_effect_size_retrieve();
+    res.json({ data: invitroData, stats: { statsData } });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 // Endpoint for searching in InVivoSI (SI_Table)
 app.get("/search/invivosi", async (req, res) => {
@@ -146,7 +147,8 @@ app.get("/search/invivosi", async (req, res) => {
     const value = decodeURIComponent(term.replace("%2E", "."));
     const orf = await get_ORF(value); // Assuming get_ORF is defined elsewhere
     const siData = await db.searchSI_Table(orf);
-    res.json({ data: siData, stats: {} });
+    const statsData = await db.in_vivo_SI_differential_LFC_retrieve("SI_Table");
+    res.json({ data: siData, stats: { statsData } });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -160,7 +162,11 @@ app.get("/search/invivosikinase", async (req, res) => {
     const value = decodeURIComponent(term.replace("%2E", "."));
     const orf = await get_ORF(value);
     const siKinaseData = await db.searchSI_Kinase_Table(orf);
-    res.json({ data: siKinaseData, stats: {} });
+    const statsData = await db.in_vivo_SI_differential_LFC_retrieve(
+      "SI_Kinase_Table"
+    );
+    console.log(statsData);
+    res.json({ data: siKinaseData, stats: { statsData } });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -174,7 +180,14 @@ app.get("/search/invivogiday5", async (req, res) => {
     const value = decodeURIComponent(term.replace("%2E", "."));
     const orf = await get_ORF(value);
     const giDay5Data = await db.searchGI_D05_Table(orf);
-    res.json({ data: giDay5Data, stats: {} });
+    const statsData = await db.in_vivo_GI_differential_LFC_retrieve(
+      "GI_D05_Table"
+    );
+    console.log("reached giday5");
+    console.log(giDay5Data);
+    console.log("~~~~~~~~~~~~~~~~~~");
+    console.log(statsData);
+    res.json({ data: giDay5Data, stats: { statsData } });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -188,7 +201,10 @@ app.get("/search/invivogiday10", async (req, res) => {
     const value = decodeURIComponent(term.replace("%2E", "."));
     const orf = await get_ORF(value);
     const giDay10Data = await db.searchGI_D10_Table(orf);
-    res.json({ data: giDay10Data, stats: {} });
+    const statsData = await db.in_vivo_GI_differential_LFC_retrieve(
+      "GI_D10_Table"
+    );
+    res.json({ data: giDay10Data, stats: { statsData } });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -232,5 +248,3 @@ app.get("*", (req, res) => {
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
-
-

@@ -1,5 +1,17 @@
 [
   {
+    "version": "V3.0",
+    "content": [
+      "Update source to in_vitro_summary_mod_t_test_compare_median_normvar_02282023_flipped.csv",
+      "Add extra line on top of each in vitro and in vivo page",
+      "Refactor rendering template, each table now has its own template",
+      "Fix the Feedback page issue",
+      "Add differential_LFC density graph to GI day 5 and 10",
+      "Add differential_LFC and Additional_differential_LFC density graph to SI and SI Kinase",
+      "Add 8 different effect size graph to in vitro page"
+    ]
+  },
+  {
     "version": "V2.0",
     "content": [
       "Add In Vitro Table",

@@ -107,8 +107,6 @@ export default {
       const g = svg
         .append("g")
         .attr("transform", `translate(${this.margin.left},${this.margin.top})`);
-      console.log("graphData below");
-      console.log(this.graphData);
 
       // Determine the max and min values dynamically
       const dataAttribute =

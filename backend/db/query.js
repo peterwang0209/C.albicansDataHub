@@ -31,7 +31,6 @@ function searchFu2021Data(value) {
   });
 }
 
-
 function searchMutantFeatureGenesData(key) {
   return new Promise((resolve, reject) => {
     knex("MutantFeatureGenesTable")
@@ -155,23 +154,54 @@ function gene_expression_level() {
   });
 }
 
+function in_vivo_GI_differential_LFC_retrieve(table) {
+  return new Promise((resolve, reject) => {
+    knex(table)
+      .select(
+        "ORF_ID",
+        "differential_LFC"
+      )
+      .then((rows) => resolve(rows))
+      .catch((err) => reject(err));
+  });
+}
+
 function searchGI_D05_Table(key) {
   return new Promise((resolve, reject) => {
     knex("GI_D05_Table")
-      .where("orf19", key)
+      .where("ORF_ID", key)
       .select("*")
-      .then(rows => resolve(rows))
-      .catch(err => reject(err));
+      .then((rows) => resolve(rows))
+      .catch((err) => reject(err));
   });
 }
 
 function searchGI_D10_Table(key) {
   return new Promise((resolve, reject) => {
     knex("GI_D10_Table")
-      .where("orf19", key)
+      .where("ORF_ID", key)
       .select("*")
-      .then(rows => resolve(rows))
-      .catch(err => reject(err));
+      .then((rows) => resolve(rows))
+      .catch((err) => reject(err));
+  });
+}
+
+function in_vitro_effect_size_retrieve() {
+  return new Promise((resolve, reject) => {
+    knex("InVitroTable")
+      .select(
+        "ORF_ID",
+        "FBS_effect_size",
+        "NoIron_effect_size",
+        "Temp37_effect_size",
+        "YPD_effect_size",
+        "NaCl_effect_size",
+        "SDS_effect_size",
+        "Sorbitol_effect_size",
+        "YNB_effect_size"
+      )
+      .then((rows) => resolve(rows))
+      .catch((err) => reject(err));
   });
 }
 
@@ -180,28 +210,41 @@ function searchInVitroTable(key) {
     knex("InVitroTable")
       .where("ORF_ID", key)
       .select("*")
-      .then(rows => resolve(rows))
-      .catch(err => reject(err));
+      .then((rows) => resolve(rows))
+      .catch((err) => reject(err));
+  });
+}
+
+function in_vivo_SI_differential_LFC_retrieve(table) {
+  return new Promise((resolve, reject) => {
+    knex(table)
+      .select(
+        "ORF_ID",
+        "differential_LFC",
+        "Additional_differential_LFC"
+      )
+      .then((rows) => resolve(rows))
+      .catch((err) => reject(err));
   });
 }
 
 function searchSI_Kinase_Table(key) {
   return new Promise((resolve, reject) => {
     knex("SI_Kinase_Table")
-      .where("orf19", key)
+      .where("ORF_ID", key)
       .select("*")
-      .then(rows => resolve(rows))
-      .catch(err => reject(err));
+      .then((rows) => resolve(rows))
+      .catch((err) => reject(err));
   });
 }
 
 function searchSI_Table(key) {
   return new Promise((resolve, reject) => {
     knex("SI_Table")
-      .where("orf19", key)
+      .where("ORF_ID", key)
       .select("*")
-      .then(rows => resolve(rows))
-      .catch(err => reject(err));
+      .then((rows) => resolve(rows))
+      .catch((err) => reject(err));
   });
 }
 
@@ -224,4 +267,7 @@ module.exports = {
   searchInVitroTable,
   searchSI_Kinase_Table,
   searchSI_Table,
+  in_vitro_effect_size_retrieve,
+  in_vivo_GI_differential_LFC_retrieve,
+  in_vivo_SI_differential_LFC_retrieve,
 };

@@ -56,13 +56,11 @@
 
     <!-- gallery -->
     <div class="flex-grow">
-      <div v-if="binaryContent && parsedBinaryData.data">
-        <GraceData :parsedBinaryData="parsedBinaryData" :key="selectedPanel" />
-      </div>
-
-      <div v-else>
-        <PlainData :plainData="parsedPlainTextData" />
-      </div>
+      <component
+        :is="currentComponent"
+        :data="currentData"
+        :key="selectedPanel"
+      />
     </div>
   </div>
 </template>
@@ -75,6 +73,13 @@ import PanelEntry from "../components/PanelEntry.vue";
 import TableComponent from "../components/Table.vue";
 import GraceData from "../components/data_display/graceData.vue";
 import PlainData from "../components/data_display/plainData.vue";
+import Fu2021DataView from "../components/data_display/Fu2021View.vue";
+import SummaryView from "../components/data_display/SummaryView.vue";
+import InvitroViewVue from "../components/data_display/InvitroView.vue";
+import InvivoGiDay10ViewVue from "../components/data_display/InvivoGiDay10View.vue";
+import InvivoGiDay5ViewVue from "../components/data_display/InvivoGiDay5View.vue";
+import InvivosiKinaseViewVue from "../components/data_display/InvivosiKinaseView.vue";
+import InvivosiViewVue from "../components/data_display/InvivosiView.vue";
 
 export default {
   components: {
@@ -84,10 +89,18 @@ export default {
     PanelEntry,
     GraceData,
     PlainData,
+    Fu2021DataView,
+    SummaryView,
+    InvitroViewVue,
+    InvivoGiDay10ViewVue,
+    InvivoGiDay5ViewVue,
+    InvivosiKinaseViewVue,
+    InvivosiViewVue,
   },
   data() {
     return {
       selectedPanel: "fu2021",
+      currentData: {},
       binaryContent: false,
       parsedBinaryData: {},
       parsedPlainTextData: {},
@@ -100,37 +113,54 @@ export default {
       inVivoSIKinaseText: "in vivo SI Kinase",
       invivoGIDay5Text: "in vivo GI Day 5",
       invivoGIDay10Text: "in vivo GI Day 10",
+      panelComponentMap: {
+        gracev1: "GraceData",
+        gracev2: "GraceData",
+        fu2021: "SummaryView",
+        mutant: "Fu2021DataView",
+        invitro: "InvitroViewVue",
+        invivosi: "InvivosiViewVue",
+        invivosikinase: "InvivosiKinaseViewVue",
+        invivogiday5: "InvivoGiDay5ViewVue",
+        invivogiday10: "InvivoGiDay10ViewVue",
+      },
     };
   },
   created() {
     this.fetchResults("fu2021");
   },
+  computed: {
+    currentComponent() {
+      // Get the current component based on the selected panel
+      return this.panelComponentMap[this.selectedPanel];
+    },
+  },
   methods: {
     async fetchResults(table) {
       const searchValue = this.$route.params.id;
-      // const searchKey = this.$route.params.type;
       const url = `${
         import.meta.env.VITE_API_URL
       }/search/${table}?term=${searchValue}`;
+      console.log(url);
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-      const response = await fetch(url);
-
-      const data = await response.json();
-      console.log(data);
-      if (this.binaryContent) {
-        this.parsedBinaryData = { table, data };
-      } else {
-        this.parsedPlainTextData = { table, data };
+        const data = await response.json();
+        console.log(data);
+        this.currentData = data;
+        console.log(this.currentData);
+      } catch (error) {
+        console.error("Fetch error:", error.message);
+        // Handle the error appropriately in your application
       }
     },
 
     handlePanelClick(table) {
+      //
       this.selectedPanel = table;
-      if (table === "gracev1" || table === "gracev2") {
-        this.binaryContent = true;
-      } else {
-        this.binaryContent = false;
-      }
       this.fetchResults(table);
     },
   },

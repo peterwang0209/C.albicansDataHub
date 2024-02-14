@@ -5,7 +5,7 @@
         <div class="flex-none">
           <table-component
             :table-data="tableDataForCurrentTable"
-            :prefix="parsedBinaryData.table"
+            :prefix="data.table"
           ></table-component>
         </div>
         <div
@@ -49,103 +49,94 @@ export default {
     this.updateImages();
   },
 
-  computed: {
-    tableDataForCurrentTable() {
-      if (this.parsedBinaryData.table === "gracev1") {
-        return this.parsedBinaryData.data.gracev1data;
-      } else if (this.parsedBinaryData.table === "gracev2") {
-        return this.parsedBinaryData.data.gracev2data;
-      }
-      return []; // default value or you can return null or any other default value
-    },
+computed: {
+  tableDataForCurrentTable() {
+    console.log(this.data);
+    if (this.data.gracev1data && this.data.gracev1data.length > 0) {
+      return this.data.gracev1data;
+    } else if (this.data.gracev2data && this.data.gracev2data.length > 0) {
+      return this.data.gracev2data;
+    }
+    return []; // Default value if neither gracev1data nor gracev2data are present
   },
+},
+
   methods: {
     isDataEmpty() {
-      if (!this.parsedBinaryData || !this.parsedBinaryData.data) {
-        return true; // If parsedBinaryData or its data property is not present
+      console.log(this.data);
+      if (!this.data) {
+        return true; // If data is not present
       }
 
-      const tableType = this.parsedBinaryData.table;
-      if (tableType === "gracev1") {
-        return (
-          this.isEmpty(this.parsedBinaryData.data.gracev1data) &&
-          this.isEmpty(this.parsedBinaryData.data.graceV1ImageSelections)
-        );
-      } else if (tableType === "gracev2") {
-        return (
-          this.isEmpty(this.parsedBinaryData.data.gracev2data) &&
-          this.isEmpty(this.parsedBinaryData.data.graceV2ImageSelections)
-        );
-      }
+      // Check for gracev1data and gracev1 image selections
+      const isGraceV1Empty =
+        this.isEmpty(this.data.gracev1data) &&
+        this.isEmpty(this.data.graceV1ImageSelections);
 
-      return true; // Default case if tableType is neither gracev1 nor gracev2
+      // Check for gracev2data and gracev2 image selections
+      const isGraceV2Empty =
+        this.isEmpty(this.data.gracev2data) &&
+        this.isEmpty(this.data.graceV2ImageSelections);
+
+      // Data is considered empty if both gracev1 and gracev2 data are empty
+      return isGraceV1Empty && isGraceV2Empty;
     },
+
     isEmpty(array) {
       return !array || array.length === 0;
     },
+
     handleImageSelect(image) {
       this.selectedImage = image;
     },
     updateImages() {
-      if (this.parsedBinaryData.table === "gracev1") {
-        this.image = this.parsedBinaryData.data.graceV1ImageSelections;
-        // console.log(this.image);
-        // console.log(this.parsedBinaryData.data);
+      console.log(this.data);
+      const createImageObjects = (imageData, graceVersion) => {
+        const doxImage = {
+          position: imageData[0].GRACE_Position,
+          grace: graceVersion,
+          plate: imageData[0][`${graceVersion}_Plate`],
+          data: imageData[0].imageData[0].DOX,
+          dox: "Dox",
+        };
+        const noDoxImage = {
+          position: imageData[0].GRACE_Position,
+          grace: graceVersion,
+          plate: imageData[0][`${graceVersion}_Plate`],
+          data: imageData[0].imageData[0].No_Dox,
+          dox: "No_Dox",
+        };
+
+        return [doxImage, noDoxImage];
+      };
+
+      // Determine if gracev1data or gracev2data is present and non-empty
+      if (this.data.gracev1data && this.data.gracev1data.length > 0) {
+        this.image = this.data.graceV1ImageSelections;
         if (this.image && this.image.length > 0) {
-          const doxImage = {
-            position: this.image[0].GRACE_Position,
-            grace: "GraceV1",
-            plate: this.image[0].GRACE_Plate,
-            data: this.image[0].imageData[0].DOX,
-            dox: "Dox",
-          };
-          const noDoxImage = {
-            position: this.image[0].GRACE_Position,
-            grace: "GraceV1",
-            plate: this.image[0].GRACE_Plate,
-            data: this.image[0].imageData[0].No_Dox,
-            dox: "No_Dox",
-          };
-          // console.log(doxImage, noDoxImage);
-          this.allImages = [doxImage, noDoxImage];
-          console.log("allImages1 updated:", this.allImages);
+          this.allImages = createImageObjects(this.image, "gracev1");
+          console.log("allImages for gracev1 updated:", this.allImages);
         }
-      } else if (this.parsedBinaryData.table === "gracev2") {
-        this.image = this.parsedBinaryData.data.graceV2ImageSelections;
-        // console.log(this.image);
-        // console.log(this.parsedBinaryData.data);
+      } else if (this.data.gracev2data && this.data.gracev2data.length > 0) {
+        this.image = this.data.graceV2ImageSelections;
         if (this.image && this.image.length > 0) {
-          const doxImage = {
-            position: this.image[0].GRACEv2_Position,
-            grace: "GraceV2",
-            plate: this.image[0].GRACEv2_Plate,
-            data: this.image[0].imageData[0].DOX,
-            dox: "Dox",
-          };
-          const noDoxImage = {
-            position: this.image[0].GRACEv2_Position,
-            grace: "GraceV2",
-            plate: this.image[0].GRACEv2_Plate,
-            data: this.image[0].imageData[0].No_Dox,
-            dox: "No_Dox",
-          };
-          // console.log(doxImage, noDoxImage);
-          this.allImages = [doxImage, noDoxImage];
-          console.log("allImages2 updated:", this.allImages);
+          this.allImages = createImageObjects(this.image, "gracev2");
+          console.log("allImages for gracev2 updated:", this.allImages);
         }
       }
 
-      this.selectedImage = this.allImages[0];
+      // Set the first image as selected by default or set to an empty object if none is available
+      this.selectedImage = this.allImages[0] || {};
     },
   },
   props: {
-    parsedBinaryData: {
+    data: {
       type: Object,
       default: () => ({}),
     },
   },
   watch: {
-    parsedBinaryData: {
+    data: {
       deep: true,
       handler(newVal) {
         this.updateImages();
