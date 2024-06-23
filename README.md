@@ -1,7 +1,7 @@
 # Candida Albicans Project Guide
 
 ## Project Overview
-This is a full stack web application built by Vue.js, Express.js and Sqlite3. It is deployed on the loveless server. The domain name is called `https://candidaphenome.org/`
+This is a full stack web application built by Vue.js, Express.js and Sqlite3. It is deployed on the lovelace server. The domain name is called `https://candidaphenome.org/`
 The domain name is owned by Professor Chad, and it is renewing yearly
 
 ## Project Structure
@@ -44,4 +44,35 @@ The domain name is owned by Professor Chad, and it is renewing yearly
 
 ## How to maintain and publish the website
 
-!!! You need to 
+You need to request the access from the lab first.
+Once you get the access, you should access to the lab through `ssh`
+
+`ssh yourname@lovelace.cs.umn.edu` and you should enter your password
+
+Once you are logged in, you can find the project root folder by using following steps
+
+```bash
+cd /heap
+cd C.albicansDataHub
+```
+
+Below are workflow I am using
+1. clone the repo into your local (done once)
+2. deploy and test the code on your end
+3. push the code to the github
+4. log to the lovelace server
+5. get to the project root
+6. `sudo git pull` the change
+7. go to the frontend
+8. run `sudo npm run build` to build the static content
+9. go to the backend 
+10. run `sudo pm2 restart index` or `sudo pm2 start index`
+
+## Extra notes
+1. you have to use the sudo command because the deployment by using pm2 is affected by the role
+2. because both backend and frontend are deployed on the same server, reverse proxy is used here. You don't need to worry about it unless you want to introduce other port.
+3. you can access apache file by executing following commands
+    ```bash
+    cd /etc/apache2
+    ```
+    `/etc/apache2/sites-available/` and `/etc/apache2/sites-enabled/` are files you should pay attention to
